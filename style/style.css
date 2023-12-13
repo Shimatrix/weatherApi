@@ -100,22 +100,24 @@
 .places__info {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 80px;
   margin-block-end: 30px;
 }
 
-@media (width <= 760px) {
+@media (width <= 580px) {
   .places__info {
     flex-direction: column;
+    align-items: flex-start;
     gap: clamp(1.875rem, -0.398rem + 11.36vw, 5rem);
   }
 }
 
 .places__temperature {
-  font-size: clamp(8rem, 6.125rem + 9.38vw, 14.563rem);
+  font-size: clamp(7.5rem, 2.723rem + 13.15vw, 14.563rem);
   font-weight: 400;
   line-height: 100%;
-  letter-spacing: -23.3px;
+  letter-spacing: -10px;
 }
 
 .places__card {
@@ -131,7 +133,7 @@
   color: var(--yellow-color);
 }
 
-@media (width <= 760px) {
+@media (width <= 580px) {
   .places__card {
     width: 100%;
   }

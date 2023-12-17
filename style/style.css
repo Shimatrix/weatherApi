@@ -63,6 +63,11 @@
 
 .main__card {
   margin-block-end: clamp(3.75rem, 3.393rem + 1.79vw, 5rem);
+  display: none;
+}
+
+.main__card_visible {
+  display: block;
 }
 
 .main__city {

@@ -27,6 +27,10 @@
   }
 }
 
+.header__select {
+  width: 400px;
+}
+
 .header__item {
   width: 180px;
   height: 60px;

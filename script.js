@@ -6,21 +6,62 @@ const placesTemperature = mainCard.querySelector('.places__temperature');
 const placesTitle = Array.from(mainCard.querySelectorAll('.places__title'));
 const placesAccent = Array.from(mainCard.querySelectorAll('.places__accent'));
 const buttonCity = Array.from(document.querySelectorAll('.header__item'));
+const submitForm = document.forms['get-city'];
+const selectForm = submitForm.querySelector('.header__select');
+const submitButton = submitForm.querySelector('.header__item');
 
 const londonButton = document.querySelector('.London');
 const moscowButton = document.querySelector('.Moscow');
 const istanbulButton = document.querySelector('.Istanbul');
+
+const cities = {
+    moscow: 'Moscow',
+    beijing: 'Beijing',
+    delhi: 'Delhi',
+    chengdu: 'Chengdu',
+    guangzhou: 'Guangzhou',
+    karachi: 'Karachi',
+    tokyo: 'Tokyo',
+    tianjin: 'Tianjin',
+    lagos: 'Lagos',
+    shenzhen: 'Shenzhen',
+    mumbai: 'Mumbai',
+    kinshasa: 'Kinshasa',
+    lahore: 'Lahore',
+    wuhan: 'Wuhan',
+    jakarta: 'Jakarta',
+    seoul: 'Seoul',
+    chennai: 'Chennai',
+    lima: 'Lima',
+    cairo: 'Cairo',
+    hangzhou: 'Hangzhou',
+    nanking: 'Nanking',
+    mexico: 'Mexico',
+    tehran: 'Tehran',
+    shenyang: 'Shenyang',
+    dhaka: 'Dhaka',
+    bangalore: 'Bangalore',
+    dongguan: 'Dongguan',
+    baghdad: 'Baghdad',
+    bogota: 'Bogota',
+    riyadh: 'Riyadh',
+    foshan: 'Foshan',
+    hyderabad: 'Hyderabad',
+    suzhou: 'Suzhou',
+    bangkok: 'Bangkok',
+    ahmedabad: 'Ahmedabad',
+    singapore: 'Singapore',
+    shanghai: 'Shanghai',
+    melbourne: 'Melbourne',
+    surat: 'Surat',
+    chongqing: 'Chongqing'
+}
 //@to-do 2: найти темплейт
 
 //@to-do 3: подключить апи по документации https://openweathermap.org/current
 const configApi = {
     url: 'https://api.openweathermap.org/data/2.5/weather?',
-    key: '&appid=df63a1c95610dafbdefed187acab2173',
-    city: {
-        london: 'q=London',
-        moscow: 'q=Moscow',
-        istanbul: 'q=Istanbul'
-    }
+    key: 'df63a1c95610dafbdefed187acab2173'
 }
 
 const checkApi = (res) => {
@@ -31,29 +72,22 @@ const checkApi = (res) => {
 }
 
 //@to-do 4: написать функции получения погоды по разным городам
-const getWeatherLondon = () => {
-   return fetch(`${configApi.url}${configApi.city.london}${configApi.key}&units=metric`)
-    .then((res) => checkApi(res))
-    .then((data) => {
-        return data
-    })
-}
+const getWeatherByCity = (city) => {
+    return fetch(`${configApi.url}q=${city}&appid=${configApi.key}&units=metric`)
+        .then((res) => checkApi(res))
+        .then((data) => {
+            return data;
+        });
+};
 
-const getWeatherMoscow = () => {
-    return fetch(`${configApi.url}${configApi.city.moscow}${configApi.key}&units=metric`)
-    .then((res) => checkApi(res))
-    .then((data) => {
-        return data
-    })
-}
-
-const getWeatherIstanbul = () => {
-    return fetch(`${configApi.url}${configApi.city.istanbul}${configApi.key}&units=metric`)
-    .then((res) => checkApi(res))
-    .then((data) => {
-        return data
-    })
-}
+for (let key in cities) {
+    if (cities.hasOwnProperty(key)) {
+      const optionElement = document.createElement("option");
+      optionElement.value = key;
+      optionElement.text = cities[key];
+      selectForm.appendChild(optionElement);
+    }
+  }
 
 //@to-do 5: клонировать темплейт
 
@@ -98,46 +132,17 @@ const refreshCardData = (data) => {
     mainData.textContent = getDateNow();
     placesTemperature.textContent = `${Math.round(data.main.temp)}°`;
     placesTitle.forEach((item, index) => {
-        if (index === 0) {
-            item.textContent = data.wind.speed;
-        }
-        if (index === 1) {
-            item.textContent = data.main.humidity;
-        }
-        if (index === 2) {
-            item.textContent = data.visibility / 1000;
-        }
+        item.textContent = labels[index];
     })
     placesAccent.forEach((item, index) => {
-            item.textContent = labels[index];
+        item.textContent = labels[index];
 })
 }
 
 //@to-do 9: написать функцию для кнопки
-const handleButtonLondon = () => {
-    renderCard();
-    deleteButtonStyle();
-    londonButton.classList.add('is-active');
-    getWeatherLondon()
-    .then((data) => refreshCardData(data))
-}
 
-const handleButtonMoscow = () => {
-    renderCard();
-    deleteButtonStyle();
-    moscowButton.classList.add('is-active');
-    getWeatherMoscow()
-    .then((data) => refreshCardData(data))
-}
 
-const handleButtonIstanbul = () => {
-    renderCard();
-    deleteButtonStyle();
-    istanbulButton.classList.add('is-active');
-    getWeatherIstanbul()
-    .then((data) => refreshCardData(data))
-}
-//@to-do 10: написать функцию изменения стиля кнопки
+// //@to-do 10: написать функцию изменения стиля кнопки
 const deleteButtonStyle = () => {
     buttonCity.forEach((button) => {
         button.classList.remove('is-active');
@@ -145,14 +150,15 @@ const deleteButtonStyle = () => {
 }
 
 //@to-do 11: навесить слушатели на кнопки
-buttonCity.forEach((item, index) => {
-    if (index === 0) {
-        item.addEventListener('click', handleButtonLondon)
+const handleFormSubmit = (event) => {
+    event.preventDefault(); // Prevent form submission
+    const selectedCity = selectForm.value;
+    if (selectedCity) {
+        renderCard();
+        deleteButtonStyle();
+        getWeatherByCity(selectedCity)
+            .then((data) => refreshCardData(data));
     }
-    if (index === 1) {
-        item.addEventListener('click', handleButtonMoscow)
-    }
-    if (index === 2) {
-        item.addEventListener('click', handleButtonIstanbul)
-    }
-})
+};
+
+submitButton.addEventListener('click', handleFormSubmit);

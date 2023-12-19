@@ -54,7 +54,8 @@ const cities = {
     shanghai: 'Shanghai',
     melbourne: 'Melbourne',
     surat: 'Surat',
-    chongqing: 'Chongqing'
+    chongqing: 'Chongqing',
+    washington: 'Washington'
 }
 //@to-do 2: найти темплейт
 
@@ -119,6 +120,12 @@ const getDateNow = () => {
 
 //@to-do 8: написать функции изменения данных карточки
 const refreshCardData = (data) => {
+    const labelsBlackCard = [
+        `${data.wind.speed}`,
+        `${data.main.humidity}`,
+        `${data.visibility / 1000}`
+    ]
+
     const labels = [
         `${data.main.feels_like}°`,
         `${data.main.temp}°`,
@@ -132,7 +139,7 @@ const refreshCardData = (data) => {
     mainData.textContent = getDateNow();
     placesTemperature.textContent = `${Math.round(data.main.temp)}°`;
     placesTitle.forEach((item, index) => {
-        item.textContent = labels[index];
+        item.textContent = labelsBlackCard[index];
     })
     placesAccent.forEach((item, index) => {
         item.textContent = labels[index];

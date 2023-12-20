@@ -28,12 +28,16 @@
 }
 
 .header__select {
-  width: 400px;
+  appearance: none;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
 }
 
 .header__item {
-  width: 180px;
-  height: 60px;
+  width: 120px;
+  height: 40px;
   background-color: transparent;
   border: 2px solid #000;
   border-radius: 30px;

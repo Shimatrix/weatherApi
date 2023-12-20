@@ -55,7 +55,8 @@ const cities = {
     melbourne: 'Melbourne',
     surat: 'Surat',
     chongqing: 'Chongqing',
-    washington: 'Washington'
+    washington: 'Washington',
+    murom: 'Murom'
 }
 //@to-do 2: найти темплейт
 

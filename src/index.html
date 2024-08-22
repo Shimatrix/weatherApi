@@ -4,10 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wether API</title>
-    <link rel="stylesheet" href="./fonts/fonts.css" />
-    <link rel="stylesheet" href="./style/variables.css" />
-    <link rel="stylesheet" href="./style/global.css" />
-    <link rel="stylesheet" href="./style/style.css" />
   </head>
   <body class="page">
     <header class="header">
@@ -29,7 +25,7 @@
                 <li class="places__list">
                   <img
                     class="places__image"
-                    src="./images/wind_yellow.svg"
+                    src="<%= require('./images/wind_yellow.svg') %>"
                     alt="icon of wind"
                   />
                   <p class="places__title"></p>
@@ -38,7 +34,7 @@
                 <li class="places__list">
                   <img
                     class="places__image"
-                    src="./images/humidity_yellow.svg"
+                    src="<%= require('./images/humidity_yellow.svg') %>"
                     alt="icon of humidity"
                   />
                   <p class="places__title"></p>
@@ -47,7 +43,7 @@
                 <li class="places__list">
                   <img
                     class="places__image"
-                    src="./images/visibility_yellow.svg"
+                    src="<%= require('./images/visibility_yellow.svg') %>"
                     alt="icon of visibility"
                   />
                   <p class="places__title"></p>
@@ -71,6 +67,5 @@
     <footer class="footer">
       <p>API Wether 2023</p>
     </footer>
-    <script src="./script.js"></script>
   </body>
 </html>

@@ -1,3 +1,7 @@
+import './style/style.css';
+import './fonts/fonts.css';
+import './style/variables.css';
+import './style/global.css';
 //@to-do 1: найти элементы
 const mainCard = document.querySelector('.main__card');
 const mainCity = mainCard.querySelector('.main__city');
@@ -5,14 +9,10 @@ const mainData = mainCard.querySelector('.main__date');
 const placesTemperature = mainCard.querySelector('.places__temperature');
 const placesTitle = Array.from(mainCard.querySelectorAll('.places__title'));
 const placesAccent = Array.from(mainCard.querySelectorAll('.places__accent'));
-const buttonCity = Array.from(document.querySelectorAll('.header__item'));
+
 const submitForm = document.forms['get-city'];
 const selectForm = submitForm.querySelector('.header__select');
 const submitButton = submitForm.querySelector('.header__item');
-
-const londonButton = document.querySelector('.London');
-const moscowButton = document.querySelector('.Moscow');
-const istanbulButton = document.querySelector('.Istanbul');
 
 const cities = {
     moscow: 'Moscow',
@@ -56,14 +56,16 @@ const cities = {
     surat: 'Surat',
     chongqing: 'Chongqing',
     washington: 'Washington',
-    murom: 'Murom'
+    murom: 'Murom',
+    irkutsk: 'Irkutsk',
+    paris: 'Paris'
 }
 //@to-do 2: найти темплейт
 
 //@to-do 3: подключить апи по документации https://openweathermap.org/current
 const configApi = {
     url: 'https://api.openweathermap.org/data/2.5/weather?',
-    key: 'df63a1c95610dafbdefed187acab2173'
+    key: process.env.KEY
 }
 
 const checkApi = (res) => {
@@ -147,23 +149,12 @@ const refreshCardData = (data) => {
 })
 }
 
-//@to-do 9: написать функцию для кнопки
-
-
-// //@to-do 10: написать функцию изменения стиля кнопки
-const deleteButtonStyle = () => {
-    buttonCity.forEach((button) => {
-        button.classList.remove('is-active');
-    })
-}
-
 //@to-do 11: навесить слушатели на кнопки
 const handleFormSubmit = (event) => {
     event.preventDefault(); // Prevent form submission
     const selectedCity = selectForm.value;
     if (selectedCity) {
         renderCard();
-        deleteButtonStyle();
         getWeatherByCity(selectedCity)
             .then((data) => refreshCardData(data));
     }
